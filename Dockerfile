@@ -2,7 +2,7 @@
 
 FROM node:14.18.1-buster
 
-WORKDIR /app
+WORKDIR /
 
 COPY ["package.json", "package-lock.json*", "./"]
 
