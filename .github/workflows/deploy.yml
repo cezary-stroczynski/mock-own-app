@@ -10,7 +10,7 @@ jobs:
     steps:
 
     env:
-      MY_VAR: ''
+      MY_VAR: pepe
       
     - name: Check if it's master branch
       if: ${{github.ref_name == 'master'}}
