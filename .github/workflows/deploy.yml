@@ -10,25 +10,25 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      REPO_NAME: 'a'
-      AWS_ACCESS_KEY_ID: 'b'
-      AWS_SECRET_ACCESS_KEY: 'c'
+      REPO_NAME: ''
+      AWS_ACCESS_KEY_ID: ''
+      AWS_SECRET_ACCESS_KEY: ''
 
     steps:
 
     - name: Check if it's master branch
       if: ${{github.ref_name == 'master'}}
       run: |
-        echo "REPO_NAME=$secrets.DEV_REPO_NAME" >> $GITHUB_ENV
-        echo "AWS_ACCESS_KEY_ID=${{secrets.DEV_AWS_ACCESS_KEY_ID}}" >> $GITHUB_ENV
-        echo "AWS_SECRET_ACCESS_KEY=secrets.DEV_SECRET_ACCESS_KEY" >> $GITHUB_ENV
+        echo "REPO_NAME=${{ secrets.DEV_REPO_NAME }}" >> $GITHUB_ENV
+        echo "AWS_ACCESS_KEY_ID=${{ secrets.DEV_AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
+        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.DEV_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
         
     - name: Check if it's release branch
       if: ${{github.ref_name == 'release'}}
       run: |
-        echo "REPO_NAME=$secrets.STAGE_REPO_NAME" >> $GITHUB_ENV
-        echo "AWS_ACCESS_KEY_ID={ secrets.STAGE_REPO_NAME }" >> $GITHUB_ENV
-        echo "AWS_SECRET_ACCESS_KEY=three" >> $GITHUB_ENV
+        echo "REPO_NAME=${{ secrets.STAGE_REPO_NAME }}" >> $GITHUB_ENV
+        echo "AWS_ACCESS_KEY_ID=${{ secrets.STAGE_AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
+        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.STAGE_AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
 
     - name: check vars
       run: |
