@@ -10,16 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      REPO_PREFIX: ''
+      REPO_NAME: ''
     steps:
 
     - name: Check if it's master branch
       if: ${{github.ref_name == 'master'}}
-      run: echo "REPO_PREFIX=devel" >> $GITHUB_ENV
+      run: echo "REPO_NAME=$DEV_REPO_NAME" >> $GITHUB_ENV
         
     - name: Check if it's release branch
       if: ${{github.ref_name == 'release'}}
-      run: echo "REPO_PREFIX=stage" >> $GITHUB_ENV
+      run: echo "REPO_NAME=$STAGE_REPO_NAME" >> $GITHUB_ENV
 
     - name: Checkout
       uses: actions/checkout@v2
@@ -39,11 +39,10 @@ jobs:
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: '${{ env.REPO_PREFIX }}.${{ secrets.REPO_NAME }}'
         IMAGE_TAG: latest
       run: |
         # Build a docker container and push it to ECR 
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker build -t $ECR_REGISTRY/$REPO_NAME:$IMAGE_TAG .
         echo "Pushing image to ECR..."
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+        echo "::set-output name=image::$ECR_REGISTRY/$REPO_NAME:$IMAGE_TAG"
