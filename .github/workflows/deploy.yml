@@ -16,14 +16,14 @@ jobs:
       if: ${{github.ref_name == 'master'}}
       run: |
         echo "it is master"
-        $MY_VAR="master"
+        echo "MY_VAR=master" >> $GITHUB_ENV
 
 
     - name: Check if it's release branch
       if: ${{github.ref_name == 'release'}}
       run: |
         echo "it is release"
-        $MY_VAR="release"
+        echo "MY_VAR=release" >> $GITHUB_ENV
 
     - name: use var
       run: echo "${MY_VAR}"
