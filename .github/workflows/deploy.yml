@@ -24,6 +24,13 @@ jobs:
     - name: use var
       run: echo "${FULL_REPO_NAME}"
 
+  pepe:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: use var
+      run: echo "${FULL_REPO_NAME}"
+
 
   # deploy:
   #   name: Deploy
