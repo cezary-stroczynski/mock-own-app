@@ -27,7 +27,7 @@ jobs:
       if: ${{github.ref_name == 'release'}}
       run: |
         echo "REPO_NAME=$secrets.STAGE_REPO_NAME" >> $GITHUB_ENV
-        echo "AWS_ACCESS_KEY_ID=two" >> $GITHUB_ENV
+        echo "AWS_ACCESS_KEY_ID={$secrets.STAGE_REPO_NAME}" >> $GITHUB_ENV
         echo "AWS_SECRET_ACCESS_KEY=three" >> $GITHUB_ENV
 
     - name: check vars
