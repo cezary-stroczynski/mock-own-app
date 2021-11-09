@@ -8,7 +8,7 @@ jobs:
   set_repo_name:
     runs-on: ubuntu-latest
     env:
-      MY_VAR: pepe
+      MY_VAR: ''
     steps:
 
       
