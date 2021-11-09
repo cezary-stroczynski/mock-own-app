@@ -9,13 +9,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+    env:
+      MY_VAR: ''
+      
     - name: Check if it's master branch
       if: ${{github.ref_name == 'master'}}
-      run: echo "it is master"
+      run: |
+        echo "it is master"
+        MY_VAR="master"
+
 
     - name: Check if it's release branch
       if: ${{github.ref_name == 'release'}}
-      run: echo "it is release"
+      run: |
+        echo "it is release"
+        MY_VAR="release"
+
+    - name: use var
+      run: echo "${MY_VAR}"
 
   # deploy:
   #   name: Deploy
