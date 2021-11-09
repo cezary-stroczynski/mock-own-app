@@ -3,30 +3,27 @@ on:
     branches: [ master, release ]
 
 name: NestJs Project CI on ECR
-
+env:
+  FULL_REPO_NAME: ''
 jobs:
   set_repo_name:
+    name: Set full ECR repository name
     runs-on: ubuntu-latest
-    env:
-      MY_VAR: ''
-    steps:
 
-      
+    steps:
     - name: Check if it's master branch
       if: ${{github.ref_name == 'master'}}
-      run: |
-        echo "it is master"
-        echo "MY_VAR=master" >> $GITHUB_ENV
+      run: echo "FULL_REPO_NAME=master" >> $GITHUB_ENV
+        
 
 
     - name: Check if it's release branch
       if: ${{github.ref_name == 'release'}}
-      run: |
-        echo "it is release"
-        echo "MY_VAR=release" >> $GITHUB_ENV
+      run: echo "FULL_REPO_NAME=release" >> $GITHUB_ENV
 
     - name: use var
-      run: echo "${MY_VAR}"
+      run: echo "${FULL_REPO_NAME}"
+
 
   # deploy:
   #   name: Deploy
