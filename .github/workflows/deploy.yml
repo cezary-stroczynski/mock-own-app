@@ -6,6 +6,7 @@ name: NestJs Project CI on ECR
 
 jobs:
   set_repo_name:
+    runs-on: ubuntu-latest
     steps:
 
     - name: Check if it's master branch
