@@ -19,7 +19,7 @@ jobs:
     - name: Check if it's master branch
       if: ${{github.ref_name == 'master'}}
       run: |
-        echo "REPO_NAME=${secrets.DEV_REPO_NAME}" >> $GITHUB_ENV
+        echo "REPO_NAME=$secrets.DEV_REPO_NAME" >> $GITHUB_ENV
         echo "AWS_ACCESS_KEY_ID=${{secrets.DEV_AWS_ACCESS_KEY_ID}}" >> $GITHUB_ENV
         echo "AWS_SECRET_ACCESS_KEY=secrets.DEV_SECRET_ACCESS_KEY" >> $GITHUB_ENV
         
