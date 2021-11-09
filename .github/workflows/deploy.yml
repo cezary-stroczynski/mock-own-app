@@ -26,6 +26,9 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
+    - name: show me env
+      run: echo ${{env.GITHUB_REF_NAME}}
+
     - name: Build, tag, and push the image to Amazon ECR
       id: build-image
       env:
