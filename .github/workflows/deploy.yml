@@ -7,10 +7,10 @@ name: NestJs Project CI on ECR
 jobs:
   set_repo_name:
     runs-on: ubuntu-latest
-    steps:
-
     env:
       MY_VAR: pepe
+    steps:
+
       
     - name: Check if it's master branch
       if: ${{github.ref_name == 'master'}}
