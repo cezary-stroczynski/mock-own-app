@@ -32,9 +32,9 @@ jobs:
 
     - name: check vars
       run: |
-        echo "${{ env.REPO_NAME }}"
-        echo "${{ env.AWS_ACCESS_KEY_ID }}"
-        echo "${{ env.AWS_SECRET_ACCESS_KEY }}"
+        echo "$REPO_NAME"
+        echo "$AWS_ACCESS_KEY_ID"
+        echo "$AWS_SECRET_ACCESS_KEY"
 
 
     - name: Checkout
