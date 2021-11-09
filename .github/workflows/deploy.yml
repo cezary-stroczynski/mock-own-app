@@ -10,18 +10,18 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      REPO_NAME: ''
-      AWS_ACCESS_KEY_ID: ''
-      AWS_SECRET_ACCESS_KEY: ''
+      REPO_NAME: 'a'
+      AWS_ACCESS_KEY_ID: 'b'
+      AWS_SECRET_ACCESS_KEY: 'c'
 
     steps:
 
     - name: Check if it's master branch
       if: ${{github.ref_name == 'master'}}
       run: |
-        echo "REPO_NAME=$secrets.DEV_REPO_NAME" >> $GITHUB_ENV
-        echo "AWS_ACCESS_KEY_ID=$secrets.DEV_AWS_ACCESS_KEY_ID" >> $GITHUB_ENV
-        echo "AWS_SECRET_ACCESS_KEY=$secrets.DEV_SECRET_ACCESS_KEY" >> $GITHUB_ENV
+        echo "REPO_NAME=${secrets.DEV_REPO_NAME}" >> $GITHUB_ENV
+        echo "AWS_ACCESS_KEY_ID=${{secrets.DEV_AWS_ACCESS_KEY_ID}}" >> $GITHUB_ENV
+        echo "AWS_SECRET_ACCESS_KEY=secrets.DEV_SECRET_ACCESS_KEY" >> $GITHUB_ENV
         
     - name: Check if it's release branch
       if: ${{github.ref_name == 'release'}}
@@ -32,9 +32,9 @@ jobs:
 
     - name: check vars
       run: |
-        echo "${{env.REPO_NAME}}"
-        echo "${{env.AWS_ACCESS_KEY_ID}}"
-        echo "${{env.AWS_SECRET_ACCESS_KEY}}"
+        echo "${env.REPO_NAME}"
+        echo "$env.AWS_ACCESS_KEY_ID"
+        echo "$AWS_SECRET_ACCESS_KEY"
 
     - name: Checkout
       uses: actions/checkout@v2
