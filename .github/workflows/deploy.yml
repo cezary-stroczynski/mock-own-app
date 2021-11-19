@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [ master, release ]
+    branches: [ master ]
 
 name: NestJs Project CI on ECR
 
@@ -9,32 +9,32 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
 
-    env:
-      REPO_NAME: ''
-      AWS_ACCESS_KEY_ID: ''
-      AWS_SECRET_ACCESS_KEY: ''
+#     env:
+#       REPO_NAME: ''
+#       AWS_ACCESS_KEY_ID: ''
+#       AWS_SECRET_ACCESS_KEY: ''
 
     steps:
 
-    - name: Check if it's master branch
-      if: ${{github.ref_name == 'master'}}
-      run: |
-        echo "REPO_NAME=${{ secrets.DEV_REPO_NAME }}" >> $GITHUB_ENV
-        echo "AWS_ACCESS_KEY_ID=${{ secrets.DEV_AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
-        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
+#     - name: Check if it's master branch
+#       if: ${{github.ref_name == 'master'}}
+#       run: |
+#         echo "REPO_NAME=${{ secrets.DEV_REPO_NAME }}" >> $GITHUB_ENV
+#         echo "AWS_ACCESS_KEY_ID=${{ secrets.DEV_AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
+#         echo "AWS_SECRET_ACCESS_KEY=${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
         
-    - name: Check if it's release branch
-      if: ${{github.ref_name == 'release'}}
-      run: |
-        echo "REPO_NAME=${{ secrets.STAGE_REPO_NAME }}" >> $GITHUB_ENV
-        echo "AWS_ACCESS_KEY_ID=${{ secrets.STAGE_AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
-        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.STAGE_AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
+#     - name: Check if it's release branch
+#       if: ${{github.ref_name == 'release'}}
+#       run: |
+#         echo "REPO_NAME=${{ secrets.STAGE_REPO_NAME }}" >> $GITHUB_ENV
+#         echo "AWS_ACCESS_KEY_ID=${{ secrets.STAGE_AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
+#         echo "AWS_SECRET_ACCESS_KEY=${{ secrets.STAGE_AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
 
-    - name: check vars
-      run: |
-        echo "$REPO_NAME"
-        echo "$AWS_ACCESS_KEY_ID"
-        echo "$AWS_SECRET_ACCESS_KEY"
+#     - name: check vars
+#       run: |
+#         echo "$REPO_NAME"
+#         echo "$AWS_ACCESS_KEY_ID"
+#         echo "$AWS_SECRET_ACCESS_KEY"
 
 
     - name: Checkout
@@ -43,8 +43,8 @@ jobs:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
 
     - name: Login to Amazon ECR
@@ -58,7 +58,7 @@ jobs:
         IMAGE_TAG: latest
       run: |
         # Build a docker container and push it to ECR 
-        docker build -t $ECR_REGISTRY/$REPO_NAME:$IMAGE_TAG .
+        docker build -t $ECR_REGISTRY/prod-original-works:$IMAGE_TAG .
         echo "Pushing image to ECR..."
-        docker push $ECR_REGISTRY/$REPO_NAME:$IMAGE_TAG
-        echo "::set-output name=image::$ECR_REGISTRY/$REPO_NAME:$IMAGE_TAG"
+        docker push $ECR_REGISTRY/prod-original-works:$IMAGE_TAG
+        echo "::set-output name=image::$ECR_REGISTRY/prod-original-works:$IMAGE_TAG"
